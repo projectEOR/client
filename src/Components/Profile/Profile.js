@@ -62,16 +62,15 @@ function Profile() {
 
   const getCurrentUser = () => {
     if(allUsers.length>0) {
-      console.log(allUsers);
       const currentUser = allUsers.find(user => {
-        console.log('findUser', user.id);
-        console.log('user', id)
-          return user.id === id;
+          return user.id === Number(id);
       });
-      console.log('currentUser', currentUser);
-      const currentUnit = allUnits.find(unit => currentUser.org_id === unit.id);
-      setUnit(currentUnit);
 
+      const currentUnit = allUnits.find(unit => {
+        return currentUser.org_id === unit.id
+      });
+      setUnit(currentUnit);
+    
       const currentRater = allUsers.find(user => user.id === currentUser.rater_id);
       setRater(currentRater);
 
@@ -134,12 +133,14 @@ function Profile() {
   }
 
   const renderProfileInfo = () =>{
-
+    const userUnit = unit ? unit : {name: 'not assigned'};
+    const userRater = rater ? rater : 'not assigned';
+    const userAdditionalRater = additionalRater? additionalRater : 'not assigned';
     return (
       <ul>
-        <li>unit: {unit.name}</li>
-        <li>rater: {rater !== 'not assigned' ? `${rater.rankSym} ${rater.first_name} ${rater.last_name}`:'not assigned'}</li>
-        <li>additional rater: {additionalRater !== 'not assigned' ? `${additionalRater.rankSym} ${additionalRater.first_name} ${additionalRater.last_name}`:'not assigned'}</li>
+        <li>unit: {userUnit.name}</li>
+        <li>rater: {userRater !== 'not assigned' ? `${userRater.rankSym} ${userRater.first_name} ${userRater.last_name}`:'not assigned'}</li>
+        <li>additional rater: {userAdditionalRater !== 'not assigned' ? `${userAdditionalRater.rankSym} ${userAdditionalRater.first_name} ${userAdditionalRater.last_name}`:'not assigned'}</li>
       </ul>
     )
   }
@@ -193,17 +194,19 @@ function Profile() {
 
   const renderCurrentReports = () => {
     const activeTrackers = trackers.filter(tracker => tracker.action_id < 4);
-    return (
-      <div className="reports">      
-        {activeTrackers.map(tracker => {
-          const report = reports.find(findReport => {
-            return findReport.id === tracker.report_id;
-          });
-          let unit = allUnits.find(unit => report.org_id === unit.id);
-          return <Report report={report} unit={unit} />
-        })}
-      </div>
-    )
+    if(reports.length>0) {
+      return (
+        <div className="reports">      
+          {activeTrackers.map(tracker => {
+            const report = reports.find(findReport => {
+              return findReport.id === tracker.report_id;
+            });
+            let unit = allUnits.find(unit => report.org_id === unit.id);
+            return <Report report={report} unit={unit} />
+          })}
+        </div>
+      )
+    }
   }
 
   const renderReports = () => {
