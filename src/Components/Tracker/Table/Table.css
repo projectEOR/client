@@ -3,12 +3,12 @@
   place-items: center;
   background-color: #505050;
   color: dodgerblue;
-  padding: 16px;
   font-size: 12pt;
 }
 
 .Table > img {
   height: 50px;
+  padding: 10px;
 }
 
 .Table tr:hover {
