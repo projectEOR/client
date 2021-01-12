@@ -36,7 +36,7 @@ const form = (props) => {
       </label>
       <br></br>
       <br></br>
-      <button className="Options" onClick={props.click}>
+      <button className="Button" onClick={props.click}>
         Submit
       </button>
     </form>
