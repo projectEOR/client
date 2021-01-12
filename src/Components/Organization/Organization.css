@@ -36,3 +36,33 @@
     transform: rotate(360deg);
   }
 }
+.org-tree ul {
+  padding-top: 20px;
+  position: relative;
+
+  transition: all 0.5s;
+}
+
+.org-tree li {
+  float: left;
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0 5px;
+
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+}
+
+/*We will use ::before and ::after to draw the connectors*/
+
+
+#chart-container {
+  height:100%;
+  width:70%;
+  border: none;
+}
+.orgchart-container {
+  border:none;
+}

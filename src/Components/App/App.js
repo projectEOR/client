@@ -9,8 +9,10 @@ import Profile from '../Profile/Profile';
 import Tracker from '../Tracker/Tracker';
 import Builder from '../Builder/Builder';
 import Organization from '../Organization/Organization';
+import OverviewProvider, { OverviewContext } from '../Organization/OverviewContext'
 
 import NavBar from '../NavBar/NavBar';
+import OverviewChart from '../Organization/OverviewChart';
 
 function App() {
   return (
@@ -21,7 +23,11 @@ function App() {
 
           <Switch>
             <Route exact path="/">
+              <OverviewProvider>
               <Organization  />
+              
+              
+              </OverviewProvider>
             </Route>
             <Route exact path="/tracker">
               <Tracker />
