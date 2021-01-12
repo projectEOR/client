@@ -1,0 +1,18 @@
+.Table {
+  display: grid;
+  place-items: center;
+  background-color: #505050;
+  color: cyan;
+  padding: 16px;
+  font-size: 12pt;
+}
+
+.Table > img {
+  height: 50px;
+}
+
+tr:hover {
+  background-color: yellow;
+  color: black;
+  cursor: pointer;
+}
