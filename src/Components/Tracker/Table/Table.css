@@ -7,8 +7,9 @@
 }
 
 .Table > img {
-  height: 50px;
-  padding: 10px;
+  height: auto;
+  width: 22%;
+  padding: 20px;
 }
 
 .Table tr:hover {
