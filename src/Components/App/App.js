@@ -27,6 +27,7 @@ function App() {
               <Tracker />
             </Route>
             <Route path="/builder">
+              <h1>Builder</h1>
               <Builder />
             </Route>
             <Route path="/profile/:id"> 
