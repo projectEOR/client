@@ -9,13 +9,10 @@ export default class Table extends Component {
     this.getKeys = this.getKeys.bind(this);
   }
   getKeys = () => {
-    // if (this.props.data.length > 0) {
     return Object.keys(this.props.data[0]);
-    // }
   };
 
   getHeader = () => {
-    // if (this.props.data.length > 0) {
     let keys = this.getKeys();
 
     return keys.map((key, index) => {
@@ -31,12 +28,9 @@ export default class Table extends Component {
         </th>
       );
     });
-    // }
   };
 
   getRowsData = () => {
-    // if (this.props.data.length > 0) {
-    //DOES NOT FAIL, but table disappers. Refresh rtns table
     let items = this.props.data;
     let keys = this.getKeys();
 
@@ -50,7 +44,6 @@ export default class Table extends Component {
         </tr>
       );
     });
-    // }
   };
 
   render() {
@@ -83,9 +76,7 @@ const RenderRow = (props) => {
       let tempKey = props.data[key].slice();
       let newKey = tempKey.slice(0, 10);
       return <td key={index * 5000 + 13}>{newKey}</td>;
-      // return <td key={props.data[key]}>{newKey}</td>;
     }
     return <td key={index * 5000 + 13}>{props.data[key]}</td>;
-    // return <td key={props.data[key] }>{props.data[key]}</td>;
   });
 };
