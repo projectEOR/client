@@ -70,7 +70,7 @@ export default function OrgSelect() {
             <ArrowDropDownIcon />
           </Button>
         </ButtonGroup>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition >
           {({ TransitionProps, placement }) => (
             <Grow
               {...TransitionProps}

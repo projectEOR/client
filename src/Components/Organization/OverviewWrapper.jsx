@@ -1,10 +1,18 @@
 import React, { useContext } from 'react'
-
-export default class OverviewWrapper extends React.Component{
-render(){
-    return(
-        <div></div>
-    )
-}
+import OverviewChart from './OverviewChart'
+import {OverviewContext} from './OverviewContext'
+export default function OverviewWrapper(){
+    const context=useContext(OverviewContext)
+    if(context.state.orgs && Array.isArray(context.state.orgs) && Array.isArray(context.state.unitmembers) && context.state.senior && (typeof context.state.orgtree)==='object'){
+        return (
+            <div>
+            <OverviewChart/>
+            </div>
+        );
+    }else{
+        return(
+            <h1>Loading...</h1>
+        )
+    }
 
 }
