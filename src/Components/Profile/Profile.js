@@ -246,10 +246,12 @@ function Profile() {
     return (
       <div className="reports">      
         {reports.map(report => {
-          let unit = allUnits.find(unit => report.org_id === unit.id);
-          report.bullets = bullets.filter(bullet => bullet.report_id === report.id);
+          if(report.afsc) {
+            let unit = allUnits.find(unit => report.org_id === unit.id);
+            report.bullets = bullets.filter(bullet => bullet.report_id === report.id);
 
-          return <Report report={report} unit={unit} />
+            return <Report report={report} unit={unit} />
+          }
         })}
       </div>
     )
