@@ -9,11 +9,15 @@ export default class Table extends Component {
     this.getKeys = this.getKeys.bind(this);
   }
   getKeys = () => {
+    // if (this.props.data.length > 0) {
     return Object.keys(this.props.data[0]);
+    // }
   };
 
   getHeader = () => {
+    // if (this.props.data.length > 0) {
     let keys = this.getKeys();
+
     return keys.map((key, index) => {
       if (key === "tracker_id") return null;
       return (
@@ -23,15 +27,19 @@ export default class Table extends Component {
             .replace("_", " ")
             .replace("ID", "")
             .replace("NAME_", "")
-            .replace("MEMBER ROLE", "ASSINGED")}
+            .replace("MEMBER ROLE", "ASSIGNED")}
         </th>
       );
     });
+    // }
   };
 
   getRowsData = () => {
+    // if (this.props.data.length > 0) {
+    //DOES NOT FAIL, but table disappers. Refresh rtns table
     let items = this.props.data;
     let keys = this.getKeys();
+
     return items.map((row, index) => {
       return (
         <tr
@@ -42,6 +50,7 @@ export default class Table extends Component {
         </tr>
       );
     });
+    // }
   };
 
   render() {

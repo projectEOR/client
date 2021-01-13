@@ -9,19 +9,19 @@ class Tracker extends Component {
     this.state = {
       data: [{}],
       activeReport: "",
-      updateAction: "",
-      updateAssignedTo: "",
+      updateAction: "1",
+      updateAssignedTo: "Rater",
     };
   }
 
   componentDidMount = async () => {
-    try {
-      const response = await fetch(`http://localhost:4000/tracker`);
-      const json = await response.json();
-      this.setState({ data: json });
-    } catch (e) {
-      console.error(e);
-    }
+    const response = await fetch(`http://localhost:4000/tracker`);
+    const json = await response.json();
+    this.setState(() => {
+      return {
+        data: json,
+      };
+    });
   };
 
   handleUpdateRouting = async (event) => {
@@ -41,39 +41,56 @@ class Tracker extends Component {
       reqOptions
     );
 
-    this.setState({ data: response });
+    this.setState(() => {
+      return [
+        {
+          data: response,
+        },
+      ];
+    });
+    this.componentDidMount();
   };
 
   handleActionRouting = (event) => {
     event.preventDefault();
-    this.setState({
-      updateAction: event.target.value,
+    this.setState(() => {
+      return {
+        updateAction: event.target.value,
+      };
     });
   };
 
   handleAssignedRouting = (event) => {
     event.preventDefault();
-    this.setState({
-      updateAssignedTo: event.target.value,
+    this.setState(() => {
+      return {
+        updateAssignedTo: event.target.value,
+      };
     });
   };
 
   handleSelectReport = (event, id) => {
     event.preventDefault();
 
-    let thisOne = this.state.data.filter(
+    let selectedReportArr = this.state.data.filter(
       (element) => element.tracker_id === id
     );
 
-    let [one] = thisOne;
+    let [selectedReportObj] = selectedReportArr;
 
-    this.setState({ activeReport: one });
+    this.setState(() => {
+      return { activeReport: selectedReportObj };
+    });
   };
 
   render() {
+    let showTable =
+      this.state.data.length > 0 ? (
+        <Table click={this.handleSelectReport} data={this.state.data} />
+      ) : null;
     return (
       <div className="Tracker">
-        <Table click={this.handleSelectReport} data={this.state.data} />
+        {showTable}
 
         <Form
           report={this.state.activeReport}
