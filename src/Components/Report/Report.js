@@ -17,17 +17,21 @@ function Report(props) {
     const unit = props.unit ? props.unit.name : '';
     const reportStart = props.report ? props.report.period_start : '';
     const reportEnd = props.report ? props.report.period_end : '';
+    const reportId = props.report ? props.report.id : '';
+    const reportBullets = props.report ? props.report.bullets : [];
     if (active) {
       return (
         <>
           <p>{reportStart}</p>
           <p>{reportEnd}</p>
           <p>{unit}</p>
+          {reportBullets.map(bullet => <p>{bullet.content}</p>)}
         </>
       )
     } else {
       return (
         <>
+          <p>{reportId}</p>
           <p>{reportEnd}</p>
           <p>{unit}</p>
         </>
