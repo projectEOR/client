@@ -10,39 +10,35 @@ import Tracker from '../Tracker/Tracker';
 import Builder from '../Builder/Builder';
 import Organization from '../Organization/Organization';
 import OverviewProvider, { OverviewContext } from '../Organization/OverviewContext'
-
+import {ThemeProvider} from '@material-ui/styles'
 import NavBar from '../NavBar/NavBar';
-import OverviewChart from '../Organization/OverviewChart';
+import theme from '../ui/Theme'
+import {Paper} from '@material-ui/core'
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Router>
-        <div>
-          <NavBar />
-
+        <NavBar />
           <Switch>
-            <Route exact path="/">
-              <OverviewProvider>
-              <Organization  />
-              
-              
-              </OverviewProvider>
-            </Route>
-            <Route exact path="/tracker">
-              <Tracker />
-            </Route>
-            <Route path="/builder">
-              <Builder />
-            </Route>
-            <Route path="/profile/:id"> 
-              <Profile />
-            </Route>
+            <Paper className="paper">
+              <Route exact path="/">
+                  <Organization  />
+              </Route>
+              <Route exact path="/tracker">
+                <Tracker />
+              </Route>
+              <Route path="/builder">
+                <Builder />
+              </Route>
+              <Route path="/profile/:id"> 
+                <Profile />
+              </Route>
+            </Paper>
           </Switch>
-        </div>
       </Router>
-    </>
-  );
+    </ThemeProvider>
+  )
 }
 
 export default App;

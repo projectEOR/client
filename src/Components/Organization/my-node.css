@@ -1,5 +1,6 @@
 .orgchart.myChart {
     background-image: none;
+    background-color: #424242;
   }
   
 
@@ -25,9 +26,11 @@
   .orgchart.myChart .oc-node .fullname {
     box-sizing: border-box;
     color: #215a88;
-    background-color: #fff;
+    background-color: #424242;
     width: 130px;
     height: 65px;
     padding: 2px;
     border: 1px solid #215a88;
   }
+
+  
