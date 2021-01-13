@@ -5,9 +5,12 @@ import { useParams } from 'react-router-dom';
 
 function Profile() {
 
+  const baseUrl = 'http://localhost:4000';
+
   let { id } = useParams();
 
   const [reports, setReports] = useState([]);
+  const [bullets, setBullets] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [allUnits, setAllUnits] = useState([]);
   const [trackers, setTrackers] = useState([]);
@@ -53,6 +56,13 @@ function Profile() {
     setReports(jsonResponse);
   };
 
+  const getBullets = async () => {
+    const response = await fetch(`${baseUrl}/bullets?user_id=${id}`)
+    const jsonResponse = await response.json();
+
+    setBullets(jsonResponse);
+  };
+
   const getTrackers = async () => {
     const response = await fetch(`http://localhost:4000/tracker/ratee/${id}`);
     const jsonResponse = await response.json();
@@ -84,6 +94,7 @@ function Profile() {
     getUsers();
     getUnits();
     getReports();
+    getBullets();
     getTrackers();
     getCurrentUser();
   }, []);
@@ -116,20 +127,42 @@ function Profile() {
     getUsers();    
   }
 
-  const handleRaterChange = (e) => {
+  const handleRaterChange = async (e) => {
+    const raterId = Number(e.target.value);
     const selectedRater = allUsers.find(user => {
-      return user.id === Number(e.target.value);
+      return user.id === raterId;
     });
-
     setRater(selectedRater);
+
+    const response = await fetch(`${baseUrl}/profiles/user/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ rater_id: raterId })
+    })
+    const jsonResponse = await response.json();
+    console.log('updated user', jsonResponse);
+    getUsers();
   }
 
-  const handleAdditionalRaterChange = (e) => {
+  const handleAdditionalRaterChange = async (e) => {
+    const addRaterId = Number(e.target.value);
     const selectedRater = allUsers.find(user => {
-      return user.id === Number(e.target.value);
+      return user.id === addRaterId;
     });
-
     setAdditionalRater(selectedRater);
+
+    const response = await fetch(`${baseUrl}/profiles/user/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ additional_rater_id: addRaterId })
+    })
+    const jsonResponse = await response.json();
+    console.log('updated user', jsonResponse);
+    getUsers();
   }
 
   const renderProfileInfo = () =>{
@@ -214,6 +247,8 @@ function Profile() {
       <div className="reports">      
         {reports.map(report => {
           let unit = allUnits.find(unit => report.org_id === unit.id);
+          report.bullets = bullets.filter(bullet => bullet.report_id === report.id);
+
           return <Report report={report} unit={unit} />
         })}
       </div>
