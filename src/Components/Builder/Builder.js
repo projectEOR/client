@@ -14,12 +14,16 @@ import Report from './Report';
 //import trashcan from './trashcan.png';
 import MyReportsList from './MyReportsList'
 import BulletsList from './BulletsList'
+import Bullet from './Bullet'
 
 function Builder() {
   const [reportsList, setReportsList] = useState([]);
   const [activeReport, setActiveReport] = useState({});
+  const [bulletsList, setBulletsList] = useState([]);
+  const [activeBullet, setActiveBullet] = useState({});
   const { path } = useRouteMatch();
   const [counter, setCounter] = useState({})
+  const baseURL = 'http://localhost:4000'
   // if(!counter.count){
   //   setCounter({count: 1})
   // }
@@ -33,7 +37,8 @@ function Builder() {
   useEffect(()=>{
     console.log('useEffect Called in Builder')
     //getReportsList();
-  },[])
+    getBulletsList();
+  },[activeBullet,activeReport])
 
   async function getReportsList(){
     console.log('getReportsList() Called')
@@ -43,7 +48,7 @@ function Builder() {
   async function getReportsList(justDeleted) {
     console.log('getReportsList(del) Called')
     reportsList.find(report=>report.id===justDeleted)
-    let data = await  fetch('http://localhost:4000/reports/?user_id=1');
+    let data = await fetch(`${baseURL}/reports/?user_id=1`);
     data = await data.json();
     await setReportsList(data);
     console.log("" + activeReport.id + " " + justDeleted)
@@ -52,18 +57,43 @@ function Builder() {
       setActiveReport(data[0])
     }
   }
+
+  async function getBulletsList() {
+    console.log('getReportsList() Called')
+    getBulletsList(-1);
+  }
+
+  async function getBulletsList(justDeleted) {
+    console.log('getBulletsList(del) Called')
+    reportsList.find(report => report.id === justDeleted)
+    let data = await fetch(`${baseURL}/bullets/?user_id=1`);
+    data = await data.json();
+    await setBulletsList(data);
+    console.log("" + activeBullet.id + " " + justDeleted)
+    if (!activeBullet.id || activeBullet.id === justDeleted) {
+      console.log("Auto-assigning activeBullet")
+      setActiveBullet(data[0])
+    }
+  }
   async function getReport(report_id){
     console.log('getReport(id) Called')
-    let data = await fetch(`http://localhost:4000/reports/${report_id}?user_id=1`)
+    let data = await fetch(`${baseURL}/reports/${report_id}?user_id=1`)
     data = await data.json()
     await setActiveReport(data[0])
+    return await data[0];
+  }
+  async function getBullet(bullet_id) {
+    console.log('getBullet(id) Called')
+    let data = await fetch(`${baseURL}/bullets/${bullet_id}?user_id=1`)
+    data = await data.json()
+    await setActiveBullet(data[0])
     return await data[0];
   }
   async function createReport(){
     console.log('createReport Called')
     let rJSON = JSON.stringify({pr_type: 1})
     let request = new XMLHttpRequest();
-    request.open('POST', `http://localhost:4000/reports/?user_id=1`, true);
+    request.open('POST', `${baseURL}/reports/?user_id=1`, true);
     request.setRequestHeader("Content-type", "application/json");
     request.onload = () => {
       console.log('Report Created')
@@ -77,7 +107,7 @@ function Builder() {
     console.log('Delete Report Called')
     let del = window.confirm("Are you sure you would like to delete Report: " + report_id + "?");
     if (del) {
-      let data = await fetch('http://localhost:4000/reports/' + report_id, {
+      let data = await fetch(`${baseURL}/reports/${report_id}`, {
         method: 'DELETE',
       })
       data = await data.json();
@@ -90,6 +120,37 @@ function Builder() {
     }
   }
 
+  async function handleDeleteBullet(bullet_id) {
+    console.log('Delete Bullet Called')
+    let del = window.confirm("Are you sure you would like to delete Bullet: " + bullet_id + "?");
+    if (del) {
+      let data = await fetch(`${baseURL}/bullets/${bullet_id}`, {
+        method: 'DELETE',
+      })
+      data = await data.json();
+      data = await data[0];
+      console.log("just Deleted " + data.id);
+      getBulletsList(data.id);
+    }
+    else {
+      console.log("Thank you for not deleting")
+    }
+  }
+  async function handleUpdateBullet(b){
+    let bcopy = { ...b };
+    delete bcopy.id;
+    let bJSON = JSON.stringify(bcopy);
+    console.log(bJSON);
+    let request = new XMLHttpRequest();
+    request.open('PUT', `${baseURL}/bullets/${b.id}`, true);
+    request.setRequestHeader("Content-type", "application/json");
+    request.onload = () => {
+      console.log('Bullet Submitted')
+      getBulletsList();
+    }
+    request.send(bJSON)
+  }
+  
 
   return (
     <>
@@ -101,7 +162,7 @@ function Builder() {
           <Link to={`${path}/report/${activeReport.id}`}>Active Report</Link>
         </li>
         <li>
-          <Link to={`${path}/report/${activeReport.id}`}>My Bullets</Link>
+          <Link to={`${path}/MyBullets`}>My Bullets</Link>
         </li>
 
       </ul>
@@ -125,12 +186,35 @@ function Builder() {
           <Report 
             activeReport={activeReport}
             setActiveReport={setActiveReport}
-            getReport = {getReport} />
+            getReport = {getReport}
+            bulletsList = {bulletsList}
+            setActiveBullet={setActiveBullet}
+            getBulletsList={getBulletsList}
+            handleDeleteBullet={handleDeleteBullet}
+            path={path} 
+            handleUpdateBullet={handleUpdateBullet}
+            getBullet={getBullet}
+            baseURL={baseURL}/>
         </Route>
         <Route exact path={`${path}/MyBullets`}>
           <BulletsList
+            bulletsList={bulletsList}
+            setActiveBullet={setActiveBullet}
+            getBulletsList = {getBulletsList}
+            handleDeleteBullet = {handleDeleteBullet}
+            path={path}
             activeReport={activeReport}
-            getReport={getReport} />
+            getReport={getReport} 
+            handleUpdateBullet={handleUpdateBullet}
+            getBullet={getBullet}
+            baseURL={baseURL}/>
+        </Route>
+        <Route exact path={`${path}/bullet/:bullet_id`}>
+          <Bullet
+            activeBullet={activeBullet}
+            setActiveBullet={setActiveBullet}
+            getBullet={getBullet} 
+            handleUpdateBullet={handleUpdateBullet}/>
         </Route>
       </Switch>
     </>

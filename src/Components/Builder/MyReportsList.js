@@ -21,17 +21,17 @@ function MyReportsList(props) {
         getReportsList();
     }, [])
 
-    // async function getReport(report_id) {
-    //     let data = await fetch(`http://localhost:4000/reports/${report_id}?user_id=1`)
-    //     data = await data.json()
-    //     setActiveReport(data[0])
+    // // async function getReport(report_id) {
+    // //     let data = await fetch(`http://localhost:4000/reports/${report_id}?user_id=1`)
+    // //     data = await data.json()
+    // //     setActiveReport(data[0])
+    // // }
+    // async function createReport() {
+    //     let data = await fetch('http://localhost:4000/reports/?user_id=1', {
+    //         method: 'POST',
+    //         body: '"pr_type":0',
+    //     })
     // }
-    async function createReport() {
-        let data = await fetch('http://localhost:4000/reports/?user_id=1', {
-            method: 'POST',
-            body: '"pr_type":0',
-        })
-    }
     
 
     const tableReportsHeaders = () => {

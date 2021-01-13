@@ -2,12 +2,20 @@ import { useState, useEffect, useContext } from 'react';
 //import { BuilderContext } from './BuilderProvider'
 import './Builder.css';
 import { useParams } from 'react-router-dom';
+import BulletsList from './BulletsList'
 
 function Report(props) {
     //const context = useContext(BuilderContext);
-    const [bulletsList, setBulletsList] = useState([]);
-    const [activeBullet, setActiveBullet] = useState({});
     const setActiveReport = props.setActiveReport;
+    const bulletsList = props.bulletsList;
+    const setActiveBullet = props.setActiveBullet;
+    const getBulletsList = props.getBulletsList;
+    const handleDeleteBullet = props.handleDeleteBullet;
+    const path = props.path;
+    const activeReport = props.activeReport;
+    const getReport = props.getReport;
+    const handleUpdateBullet = props.handleUpdateBullet;
+    const getBullet = props.getBullet;
     let r = props.activeReport;;
     let {report_id} = useParams();
     
@@ -47,7 +55,7 @@ function Report(props) {
         let rJSON = JSON.stringify(rcopy);
         console.log(rJSON);
         let request = new XMLHttpRequest();
-        request.open('PUT', `http://localhost:4000/reports/${r.id}`,true);
+        request.open('PUT', `${baseURL}/reports/${r.id}`,true);
         request.setRequestHeader("Content-type", "application/json");
         request.onload = ()=>{
             console.log('Report Submitted')
@@ -139,8 +147,38 @@ function Report(props) {
 
         </form>
         {JSON.stringify(r)}
+        <h2>Bullets in this Report</h2>
+        <BulletsList 
+            report_id={r.id} 
+            bulletsList={bulletsList}
+            setActiveBullet={setActiveBullet}
+            getBulletsList={getBulletsList}
+            handleDeleteBullet={handleDeleteBullet}
+            path={path}
+            activeReport={activeReport}
+            getReport={getReport} 
+            handleUpdateBullet={handleUpdateBullet}
+            getBullet={getBullet}
+            onRowClick="remove"
+            baseURL={baseURL}/>
+        
+        <h2>Select Bullets to add to this Report</h2>
+        <BulletsList 
+            bulletsList={bulletsList}
+            setActiveBullet={setActiveBullet}
+            getBulletsList={getBulletsList}
+            handleDeleteBullet={handleDeleteBullet}
+            path={path}
+            activeReport={activeReport}
+            getReport={getReport} 
+            onRowClick="add"
+            activeReport={activeReport}
+            handleUpdateBullet={handleUpdateBullet}
+            getBullet={getBullet}
+            baseURL={baseURL}/>
         </>
     )
 }
 
 export default Report;
+
