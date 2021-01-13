@@ -16,7 +16,8 @@ function Report(props) {
     const getReport = props.getReport;
     const handleUpdateBullet = props.handleUpdateBullet;
     const getBullet = props.getBullet;
-    let r = props.activeReport;;
+    const baseURL = props.baseURL;
+    let r = props.activeReport;
     let {report_id} = useParams();
     
 
