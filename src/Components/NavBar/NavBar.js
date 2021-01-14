@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/styles'
 import Tabs from '@material-ui/core/Tabs'
 import Tab from '@material-ui/core/Tab'
-
+import LoginMenu from './LoginMenu'
 import logo from './logo.png'
 import {Link,Router} from 'react-router-dom'
 
@@ -67,9 +67,11 @@ export default function Header(props){
                     </Typography>
                     <Tabs className={classes.tabContainer} centered onChange={handleChange} value={value}>
                         <Tab component={Link} to={'/'} className={classes.tab} label="Overview" />
+                        <Tab component={Link} to={'/profile/1'} className={classes.tab} label="Profile" />
                         <Tab component={Link} to={'/tracker'} className={classes.tab} label="Report Tracker" />
                         <Tab component={Link} to={'/builder'} className={classes.tab} label="Report Builder" />
                     </Tabs>
+                    <LoginMenu/>
                 </Toolbar>
             </AppBar>
         </ElevationScroll>
