@@ -262,7 +262,10 @@ function Profile() {
         {reports.map(report => {
           if(report.afsc) {
             let rater = allUsers.find(user => report.rater_id === user.id);
-            let raterRank = ranks.find(rank => rater.rank_id === rank.id);
+            let raterRank;
+            if (rater) {
+              raterRank = ranks.find(rank => rater.rank_id === rank.id);
+            }
             let unit = allUnits.find(unit => report.org_id === unit.id);
             report.bullets = bullets.filter(bullet => bullet.report_id === report.id);
 
