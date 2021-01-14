@@ -16,6 +16,7 @@ import theme from '../ui/Theme'
 import {Paper} from '@material-ui/core'
 
 function App() {
+  const baseURL = 'http://localhost:4000'
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -23,16 +24,16 @@ function App() {
           <Switch>
             <Paper className="paper">
               <Route exact path="/">
-                  <Organization  />
+              <Organization baseURL={baseURL}/>
               </Route>
               <Route exact path="/tracker">
-                <Tracker />
+              <Tracker baseURL={baseURL}/>
               </Route>
               <Route path="/builder">
-                <Builder />
+                <Builder baseURL={baseURL} />
               </Route>
               <Route path="/profile/:id"> 
-                <Profile />
+              <Profile baseURL={baseURL}/>
               </Route>
             </Paper>
           </Switch>

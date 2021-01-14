@@ -8,7 +8,15 @@ import {
   Link
 } from "react-router-dom";
 //import {Alert} from "react-native";
+
 import './Builder.css';
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Toolbar from '@material-ui/core/Toolbar'
+import Button from '@material-ui/core/Button'
+
 import Report from './Report';
 //import {BuilderContext} from './BuilderProvider';
 //import trashcan from './trashcan.png';
@@ -16,14 +24,23 @@ import MyReportsList from './MyReportsList'
 import BulletsList from './BulletsList'
 import Bullet from './Bullet'
 
-function Builder() {
+function Builder(props) {
   const [reportsList, setReportsList] = useState([]);
   const [activeReport, setActiveReport] = useState({});
   const [bulletsList, setBulletsList] = useState([]);
   const [activeBullet, setActiveBullet] = useState({});
   const { path } = useRouteMatch();
   const [counter, setCounter] = useState({})
-  const baseURL = 'http://localhost:4000'
+  const baseURL = props.baseURL;
+
+  const styles = {
+    appBar: {
+      flexWrap: 'wrap',
+    },
+    tabs: {
+      width: '100%',
+    },
+  };
   // if(!counter.count){
   //   setCounter({count: 1})
   // }
@@ -154,19 +171,17 @@ function Builder() {
 
   return (
     <>
-      <ul>
-        <li>
-          <Link to={`${path}/MyReports`}>My Reports</Link>
-        </li>
-        <li>
-          <Link to={`${path}/report/${activeReport.id}`}>Active Report</Link>
-        </li>
-        <li>
-          <Link to={`${path}/MyBullets`}>My Bullets</Link>
-        </li>
-
-      </ul>
-      <button onClick={createReport}>Create New Report</button>
+    <Toolbar 
+      title="Report and Bullet Builder"
+      style={styles.appBar}>
+      <Tabs style={styles.tabs} centered="true">
+        <Tab component={Link} to={`${path}/MyReports`} label="My Reports"/>
+        <Tab component={Link} to={`${path}/report/${activeReport.id}`} label="Active Report"/>
+        <Tab component={Link} to={`${path}/MyBullets`} label="My Bullets"/>
+      </Tabs>
+    </Toolbar>
+      
+      <Button onClick={createReport} variant="outlined">Create New Report</Button>
       <Switch>
         <Route exact path={`${path}/`}>
           <Redirect to={`${path}/MyReports`} />

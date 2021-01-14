@@ -1,3 +1,4 @@
+import { TableRow, TableCell, Table, Button } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import{ Link, useHistory } from 'react-router-dom';
 //import {Alert} from "react-native";
@@ -59,14 +60,14 @@ function BulletsList(props) {
 
     const tableBulletsHeaders = () => {
         return (
-            <tr>
-                <th>Bullet ID</th>
-                <th>Report ID</th>
-                <th>Content</th>
-                <th>Active Report: {activeReport.id}</th>
-                <th>Delete</th>
+            <TableRow>
+                <TableCell>Bullet ID</TableCell>
+                <TableCell>Report ID</TableCell>
+                <TableCell>Content</TableCell>
+                <TableCell>Active Report: {activeReport.id}</TableCell>
+                <TableCell>Delete</TableCell>
                 
-            </tr>
+            </TableRow>
         )
     }
     const navigateToBullet = async (e, bullet_id) => {
@@ -111,33 +112,33 @@ function BulletsList(props) {
         }
         return b.sort((a,b)=>-(a.id-b.id)).map(bullet => {
             return (
-                <tr onClick={(e) => navigateToBullet(e,bullet.id)}>
-                    <td>
+                <TableRow onClick={(e) => navigateToBullet(e,bullet.id)}>
+                    <TableCell>
                         {bullet.id}
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         {(bullet.report_id===deadReport||!bullet.report_id)?"None":bullet.report_id}
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         {bullet.content}
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         <button class="addToReport" onClick={(e)=>addBulletToReport(e,bullet.id)}>{(onRowClick==="remove")?"Remove from Report":"Add to Report"}</button>
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         <img src={trashcan} alt="delete" class="trashcan" onClick={() => handleDeleteBullet(bullet.id)}></img>
-                    </td>
+                    </TableCell>
                     
-                </tr>
+                </TableRow>
             )
         })
     }
     const tableBullets = () => {
         return (
-            <table>
+            <Table >
                 {tableBulletsHeaders()}
                 {tableBulletsEntries()}
-            </table>
+            </Table>
 
         )
     }
@@ -146,7 +147,7 @@ function BulletsList(props) {
     return (
         <>
             {tableBullets()}
-            <button onClick={()=>createBullet(report_id)}>Create New Bullet</button>
+            <Button onClick={()=>createBullet(report_id)}>Create New Bullet</Button>
         </>
     );
 
