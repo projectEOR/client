@@ -234,8 +234,10 @@ function Profile() {
             const report = reports.find(findReport => {
               return findReport.id === tracker.report_id;
             });
+            let rater = allUsers.find(user => report.rater_id === user.id);
+            let raterRank = ranks.find(rank => rater.rank_id === rank.id);
             let unit = allUnits.find(unit => report.org_id === unit.id);
-            return <Report current={true} report={report} unit={unit} />
+            return <Report raterRank={raterRank} current={true} report={report} unit={unit} rater={rater}/>
           })}
         </div>
       )
@@ -247,10 +249,12 @@ function Profile() {
       <div className="reports">      
         {reports.map(report => {
           if(report.afsc) {
+            let rater = allUsers.find(user => report.rater_id === user.id);
+            let raterRank = ranks.find(rank => rater.rank_id === rank.id);
             let unit = allUnits.find(unit => report.org_id === unit.id);
             report.bullets = bullets.filter(bullet => bullet.report_id === report.id);
 
-            return <Report current={false} report={report} unit={unit} />
+            return <Report current={false} report={report} unit={unit} rater={rater} raterRank={raterRank} />
           }
         })}
       </div>
