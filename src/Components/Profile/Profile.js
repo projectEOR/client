@@ -235,7 +235,7 @@ function Profile() {
               return findReport.id === tracker.report_id;
             });
             let unit = allUnits.find(unit => report.org_id === unit.id);
-            return <Report report={report} unit={unit} />
+            return <Report current={true} report={report} unit={unit} />
           })}
         </div>
       )
@@ -250,7 +250,7 @@ function Profile() {
             let unit = allUnits.find(unit => report.org_id === unit.id);
             report.bullets = bullets.filter(bullet => bullet.report_id === report.id);
 
-            return <Report report={report} unit={unit} />
+            return <Report current={false} report={report} unit={unit} />
           }
         })}
       </div>

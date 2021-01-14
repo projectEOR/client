@@ -1,5 +1,6 @@
 import './Report.css';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Report(props) {
 
@@ -22,6 +23,7 @@ function Report(props) {
     if (active) {
       return (
         <>
+          {props.current ? <Link to={`/builder/report/${reportId}`}>edit</Link> : null}
           <p>{reportStart}</p>
           <p>{reportEnd}</p>
           <p>{unit}</p>
