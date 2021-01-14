@@ -247,7 +247,10 @@ function Profile() {
               return findReport.id === tracker.report_id;
             });
             let rater = allUsers.find(user => report.rater_id === user.id);
-            let raterRank = ranks.find(rank => rater.rank_id === rank.id);
+            let raterRank;
+            if (rater) {
+              raterRank = ranks.find(rank => rater.rank_id === rank.id);
+            }
             let unit = allUnits.find(unit => report.org_id === unit.id);
             return <Report raterRank={raterRank} current={true} report={report} unit={unit} rater={rater}/>
           })}
