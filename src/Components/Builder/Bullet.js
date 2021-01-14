@@ -37,6 +37,17 @@ function Bullet(props) {
         <form id="bulletForm" onSubmit={handleBulletSubmit} onChange={handleBulletChange}>
             <h3>Bullet ID: {b.id}</h3>
             <input type="submit" value="Save Updates"/><br></br>
+
+                {/* <Grid item>
+                    <TextField
+                        type="text"
+                        id="user_id"
+                        name="user_id"
+                        defaultValue={r.user_id}
+                        label="Remarks"
+                        variant="filled"
+                        multiline
+                    /></Grid> */}
             <label for="user_id">This Bullet belongs to User ID:</label><br></br>
                 <input 
                     type="text" 
@@ -53,7 +64,8 @@ function Bullet(props) {
                     ></input><br></br>
 
             <label for="content">Bullet</label><br></br>
-                <input type="text" id="content" name="content" defaultValue={b.content}></input><br></br>
+                <input type="text" id="content" name="content" defaultValue={b.content.trim()} maxLength="128"></input><br /> 
+                <p>{128-b.content.trim().length} characters remaining</p><br />
 
             <label for="support">Bullet Supporting Documentation</label><br></br>
                 <input type="text" id="support" name="support" defaultValue={b.support}></input><br></br>
@@ -64,7 +76,6 @@ function Bullet(props) {
             <input type="submit" value="Save Updates" /><br></br>
 
         </form>
-        {JSON.stringify(b)}
         </>
     )
 }

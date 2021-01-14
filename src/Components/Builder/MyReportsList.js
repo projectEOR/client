@@ -5,6 +5,21 @@ import './Builder.css';
 //import Report from './Report';
 //import { BuilderContext } from './BuilderProvider';
 import trashcan from './trashcan.png';
+import { MDCDataTable } from '@material/data-table';
+import Table from '@material-ui/core/Table'
+import TableHead from '@material-ui/core/TableHead'
+import TableBody from '@material-ui/core/TableBody'
+import TableRow from '@material-ui/core/TableRow'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import Paper from '@material-ui/core/Paper'
+
+
+// @use "@material/data-table/data-table";
+// @include data - table.core - styles;
+// @include data - table.theme - baseline;
+
+
 
 function MyReportsList(props) {
     const reportsList = props.reportsList;
@@ -14,6 +29,8 @@ function MyReportsList(props) {
     const path = props.path;
     const history = useHistory();
     const getReport = props.getReport;
+    //const document = new Document();
+    //const dataTable = new MDCDataTable(document.querySelector('.mdc-data-table'));
     //const context = useContext(BuilderContext);
     console.log("MyReports Rendered");
 
@@ -36,12 +53,12 @@ function MyReportsList(props) {
 
     const tableReportsHeaders = () => {
         return (
-            <tr>
-                <th>Report ID</th>
-                <th>User ID</th>
-                <th>Closeout Date</th>
-                <th>Delete</th>
-            </tr>
+            <TableRow >
+                <TableCell >Report ID</TableCell>
+                <TableCell >User ID</TableCell>
+                <TableCell >Closeout Date</TableCell>
+                <TableCell >Delete</TableCell>
+            </TableRow>
         )
     }
     const navigateToReport = async (e,report_id) => {
@@ -56,30 +73,33 @@ function MyReportsList(props) {
     const tableReportsEntries = () => {
         return reportsList.map(report => {
             return (
-                <tr onClick={(e) => navigateToReport(e,report.id)}>
-                    <td>
+                <TableRow onClick={(e) => navigateToReport(e,report.id)} >
+                    <TableCell>
                         {report.id}
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         {report.user_id}
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         {report.period_end}
-                    </td>
-                    <td>
+                    </TableCell>
+                    <TableCell>
                         <img src={trashcan} alt="delete" class="trashcan" onClick={() => handleDeleteReport(report.id)}></img>
-                    </td>
-                </tr>
+                    </TableCell>
+                </TableRow>
             )
         })
     }
     const tableReports = () => {
         return (
-            <table>
-                <thead>{tableReportsHeaders()}</thead>
-                <tbody>{tableReportsEntries()}</tbody>
-                
-            </table>
+                <TableContainer component={Paper} >
+                    <Table >
+                        <TableHead>{tableReportsHeaders()}</TableHead>
+                        <TableBody>{tableReportsEntries()}</TableBody>
+                        
+                    </Table>
+                </TableContainer>
+            
 
         )
     }
