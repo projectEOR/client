@@ -51,6 +51,58 @@ class Tracker extends Component {
     this.componentDidMount();
   };
 
+  handleDelete = async (event) => {
+    event.preventDefault();
+
+    const reqOptions = {
+      method: "DELETE",
+    };
+
+    const response = await fetch(
+      `http://localhost:4000/tracker/ratee/${this.state.activeReport.ratee_id}`,
+      reqOptions
+    );
+
+    this.setState(() => {
+      return [
+        {
+          data: response,
+        },
+      ];
+    });
+    this.componentDidMount();
+  };
+
+  handleNewTrack = async () => {
+    const reqOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        closeout: "2022-12-15",
+        sq_suspense: "2022-11-15",
+        gp_suspense: "2022-11-22",
+        wg_suspense: "2022-11-29",
+        member_role: "Rater",
+        ratee_id: 1,
+        rater_id: 2,
+        action_id: 1,
+        org_name_id: 2,
+        report_id: 4,
+      }),
+    };
+
+    const response = await fetch(`http://localhost:4000/tracker`, reqOptions);
+
+    this.setState(() => {
+      return [
+        {
+          data: response,
+        },
+      ];
+    });
+    this.componentDidMount();
+  };
+
   handleActionRouting = (event) => {
     event.preventDefault();
     this.setState(() => {
@@ -99,6 +151,8 @@ class Tracker extends Component {
           action={this.state.updateAction}
           assignedFunc={this.handleAssignedRouting}
           assigned={this.state.updateAssignedTo}
+          delete={this.handleDelete}
+          addReport={this.handleNewTrack}
         />
       </div>
     );

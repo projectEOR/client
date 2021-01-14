@@ -7,11 +7,29 @@
 
 .Button {
   background-color: cyan;
-  border: none;
+  border-radius: 10px;
+  border-style: outset;
   color: #505050;
-  padding: 5px 75px;
+  padding: 5px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  margin: 5px;
+  border-color: black;
+}
+
+#delete {
+  background-color: red;
+  color: black;
+  margin: 5px;
+  border-color: cyan;
+}
+
+#add {
+  background-color: green;
+  color: white;
+  margin: 5px;
+  border-color: cyan;
+  align-items: center;
 }

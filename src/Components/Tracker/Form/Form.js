@@ -39,6 +39,9 @@ const form = (props) => {
       <button className="Button" onClick={props.click}>
         Submit
       </button>
+      <button id="delete" className="Button" onClick={props.delete}>
+        Delete
+      </button>
     </form>
   );
 
@@ -65,6 +68,9 @@ const form = (props) => {
       </div>
 
       {props.report ? updateReport : null}
+      <button className="Button" id="add" onClick={props.addReport}>
+        Add New Report
+      </button>
     </div>
   );
 };
