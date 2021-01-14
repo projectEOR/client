@@ -2,6 +2,7 @@ import './Profile.css';
 import Report from '../Report/Report';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Button from '@material-ui/core/Button'
 
 function Profile() {
 
@@ -15,6 +16,7 @@ function Profile() {
   const [allUnits, setAllUnits] = useState([]);
   const [trackers, setTrackers] = useState([]);
   const [ranks, setRanks] = useState([]);
+  const [user, setUser] = useState({});
   const [unit, setUnit] = useState({name: 'not assigned'});
   const [rater, setRater] = useState('not assigned');
   const [additionalRater, setAdditionalRater] = useState('not assigned');
@@ -75,6 +77,7 @@ function Profile() {
       const currentUser = allUsers.find(user => {
           return user.id === Number(id);
       });
+      setUser(currentUser);
 
       const currentUnit = allUnits.find(unit => {
         return currentUser.org_id === unit.id
@@ -166,15 +169,24 @@ function Profile() {
   }
 
   const renderProfileInfo = () =>{
+    const userRank = ranks.find(rank => user.rank_id === rank.id);
     const userUnit = unit ? unit : {name: 'not assigned'};
     const userRater = rater ? rater : 'not assigned';
     const userAdditionalRater = additionalRater? additionalRater : 'not assigned';
     return (
-      <ul>
-        <li>unit: {userUnit.name}</li>
-        <li>rater: {userRater !== 'not assigned' ? `${userRater.rankSym} ${userRater.first_name} ${userRater.last_name}`:'not assigned'}</li>
-        <li>additional rater: {userAdditionalRater !== 'not assigned' ? `${userAdditionalRater.rankSym} ${userAdditionalRater.first_name} ${userAdditionalRater.last_name}`:'not assigned'}</li>
-      </ul>
+      <div className='profile-header'>
+        <div className='profile-info'>
+          <h3>{userRank ? userRank.symbol : null} {user.first_name} {user.last_name}</h3>
+          <p>Unit: {userUnit.name}</p>
+          <p>Rater: {userRater !== 'not assigned' ? `${userRater.rankSym} ${userRater.first_name} ${userRater.last_name}`:'not assigned'}</p>
+          <p>Additional Rater: {userAdditionalRater !== 'not assigned' ? `${userAdditionalRater.rankSym} ${userAdditionalRater.first_name} ${userAdditionalRater.last_name}`:'not assigned'}</p>
+        </div>
+        
+        <Button onClick={() => setUpdateActive(!updateActive)}>
+          {updateActive ? 'Close':'Update Profile'}
+        </Button>
+        {renderUpdateSelects()}
+      </div>
     )
   }
 
@@ -264,10 +276,7 @@ function Profile() {
   return (
     <>
       {renderProfileInfo()}
-      <button onClick={() => setUpdateActive(!updateActive)}>
-        {updateActive ? 'Close':'Update Profile'}
-      </button>
-      {renderUpdateSelects()}
+
       <h2>Current Report</h2>
       {renderCurrentReports()}
       <h2>All Reports</h2>

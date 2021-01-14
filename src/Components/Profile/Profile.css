@@ -37,25 +37,26 @@
   }
 }
 
-table, th, td {
-  border: 1px solid black;
-  padding: 8px;
+.profile-header {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 }
 
-table {
-  border-collapse: collapse;
+.profile-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-table tr:nth-child(even){background-color: #f2f2f2;}
+.profile-info h3, .profile-info p {
+  display: inline-block;
+  text-decoration: underline;
+}
 
-table tr:hover {background-color: #ddd;}
-
-table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #6289bd;
-  color: white;
+.profile-info ul {
+  list-style: none;
 }
 
 img {

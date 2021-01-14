@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
+    margin: '20px'
   },
   media: {
     height: 0,
@@ -52,40 +53,39 @@ function Report(props) {
     const reportId = props.report ? props.report.id : '';
     const reportBullets = props.report ? props.report.bullets : [];
     const rater = props.rater ? `${props.raterRank.symbol} ${props.rater.first_name} ${props.rater.last_name}` : '';
-    //if (active) {
       return (
         <>
           <Card className={classes.root}>
-      <CardHeader
-        action={
-          <IconButton aria-label="settings">
-            {props.current ? (<Link to={`/builder/report/${reportId}`}>
-              <Button >Edit</Button>
-            </Link>) : null}
-          </IconButton>
-        }
-        title={`${reportEnd} - ${unit}`}
-        subheader={`Rater: ${rater}`}
-      />
-      <CardActions disableSpacing>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography variant='h5' component='h5'>Bullets</Typography>
-          {reportBullets.map(bullet => <Typography paragraph>{bullet.content}</Typography>)}
-        </CardContent>
-      </Collapse>
-    </Card>
+            <CardHeader
+              action={
+                <IconButton aria-label="settings">
+                  {props.current ? (<Link to={`/builder/report/${reportId}`}>
+                    <Button >Edit</Button>
+                  </Link>) : null}
+                </IconButton>
+              }
+              title={`${reportEnd} - ${unit}`}
+              subheader={`Rater: ${rater}`}
+            />
+            <CardActions disableSpacing>
+              <IconButton
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                <Typography variant='h5' component='h5'>Bullets</Typography>
+                {reportBullets.map(bullet => <Typography paragraph>{bullet.content}</Typography>)}
+              </CardContent>
+            </Collapse>
+          </Card>
         </>
       )
   }
