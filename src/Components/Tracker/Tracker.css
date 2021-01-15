@@ -2,3 +2,30 @@
   text-align: center;
   background-color: #505050;
 }
+
+table,
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table tr:nth-child(even) {
+  background-color: rgb(63, 70, 53);
+}
+
+table tr:hover {
+  background-color: #ddd;
+}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #6289bd;
+  color: white;
+}
